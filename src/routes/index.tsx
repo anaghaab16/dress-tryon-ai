@@ -32,11 +32,6 @@ const STEPS = [
     body: "One of you, one of the dress — from any shop, screenshot or catalogue.",
   },
   {
-    icon: Camera,
-    title: "Upload two photos",
-    body: "One of you, one of the dress — from any shop, screenshot or catalogue.",
-  },
-  {
     icon: Sparkles,
     title: "AI dresses you",
     body: "The model keeps your face and proportions while fitting the garment to your body.",
@@ -46,6 +41,14 @@ const STEPS = [
     title: "Get the verdict",
     body: "A short, honest read on fit, colour and how to style it for your occasion.",
   },
+];
+
+const MARQUEE = [
+  "Photoreal try-on",
+  "Stylist's verdict",
+  "Fit & colour analysis",
+  "Your looks, saved",
+  "12 second render",
 ];
 
 function Index() {
