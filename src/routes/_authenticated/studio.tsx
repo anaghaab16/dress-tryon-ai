@@ -2,10 +2,13 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { motion } from "motion/react";
 import { Loader2, Upload, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 import { createTryOn } from "@/lib/tryon.functions";
 import { fileToCompressedDataUrl } from "@/lib/images";
+import { PageHeading } from "@/components/PageHeading";
+import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -48,11 +51,10 @@ function Studio() {
 
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-14">
-      <p className="text-[10px] tracking-luxe text-muted-foreground">The fitting room</p>
-      <h1 className="mt-3 font-display text-4xl md:text-5xl">Try-On Studio</h1>
+      <PageHeading eyebrow="The fitting room" title="Try-On Studio" accentFrom={1} />
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_1.1fr]">
-        <section className="space-y-8">
+        <Reveal className="space-y-8">
           <div className="grid gap-6 sm:grid-cols-2">
             <PhotoInput id="person" label="Your photo" value={person} onChange={setPerson} />
             <PhotoInput id="dress" label="The dress" value={dress} onChange={setDress} />
@@ -99,9 +101,14 @@ function Studio() {
               </>
             )}
           </Button>
-        </section>
+        </Reveal>
 
-        <section className="border border-border bg-card p-8 shadow-soft">
+        <motion.section
+          initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="glass-panel p-8 shadow-soft"
+        >
           {mutation.isPending && (
             <div className="flex h-96 items-center justify-center text-[11px] tracking-luxe text-muted-foreground">
               Generating your look…
@@ -134,7 +141,7 @@ function Studio() {
               )}
             </div>
           )}
-        </section>
+        </motion.section>
       </div>
     </main>
   );

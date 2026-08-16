@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { motion } from "motion/react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/useAuth";
+import { Eyebrow, TypeReveal } from "@/components/TypeReveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -79,26 +81,55 @@ function AuthPage() {
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      <div className="hidden bg-runway lg:block">
+      <div className="relative hidden overflow-hidden bg-aurora lg:block">
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -top-32 left-1/3 size-[34rem] rounded-full bg-gold opacity-25 blur-3xl"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.16, 0.3, 0.16] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
         <div className="flex h-full flex-col justify-between p-14">
           <Link to="/" className="font-display text-2xl font-semibold">
             Maison<span className="text-accent">Mirror</span>
           </Link>
           <div>
-            <h1 className="max-w-md font-display text-5xl leading-tight">
-              Wear it before you buy it.
-            </h1>
-            <p className="mt-4 max-w-sm text-sm text-muted-foreground">
+            <TypeReveal
+              as="h1"
+              text="Wear it before you buy it."
+              accentFrom={3}
+              className="max-w-md font-display text-5xl leading-[1.08]"
+            />
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="mt-5 max-w-sm text-sm text-muted-foreground"
+            >
               Upload a photo of yourself and any dress. Our AI shows the look on you and tells you
               honestly whether it works.
-            </p>
+            </motion.p>
           </div>
           <p className="text-[11px] tracking-luxe text-muted-foreground">AI Fitting Room · 2026</p>
         </div>
       </div>
 
-      <div className="flex items-center justify-center px-6 py-16">
+      <motion.div
+        initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="flex items-center justify-center px-6 py-16"
+      >
         <div className="w-full max-w-sm">
+          <div className="mb-8 lg:hidden">
+            <Eyebrow>AI fitting room</Eyebrow>
+            <TypeReveal
+              as="h1"
+              text="Wear it before you buy it."
+              accentFrom={3}
+              delay={0.1}
+              className="mt-3 font-display text-3xl leading-[1.1]"
+            />
+          </div>
           <Tabs defaultValue="signin">
             <TabsList className="grid w-full grid-cols-2 rounded-none">
               <TabsTrigger value="signin">Sign in</TabsTrigger>
@@ -153,7 +184,7 @@ function AuthPage() {
             Continue with Google
           </Button>
         </div>
-      </div>
+      </motion.div>
     </main>
   );
 }
