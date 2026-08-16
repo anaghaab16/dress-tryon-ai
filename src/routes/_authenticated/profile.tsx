@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
+import { PageHeading } from "@/components/PageHeading";
+import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -69,12 +71,12 @@ function Profile() {
 
   return (
     <main className="mx-auto w-full max-w-2xl px-5 py-14">
-      <p className="text-[10px] tracking-luxe text-muted-foreground">Account</p>
-      <h1 className="mt-3 flex items-center gap-3 font-display text-4xl">
-        Profile
-        {isAdmin && <Badge className="rounded-none text-[10px] tracking-luxe">Admin</Badge>}
-      </h1>
-      <p className="mt-3 text-sm text-muted-foreground">{user?.email}</p>
+      <PageHeading eyebrow="Account" title="Profile">
+        <div className="flex items-center gap-3">
+          <p className="text-sm text-muted-foreground">{user?.email}</p>
+          {isAdmin && <Badge className="rounded-none text-[10px] tracking-luxe">Admin</Badge>}
+        </div>
+      </PageHeading>
 
       <form onSubmit={save} className="mt-10 space-y-6">
         {(
@@ -84,8 +86,8 @@ function Profile() {
             ["dress_size", "Usual dress size", "text"],
             ["skin_tone", "Skin tone", "text"],
           ] as const
-        ).map(([key, label, type]) => (
-          <div key={key} className="space-y-2">
+        ).map(([key, label, type], i) => (
+          <Reveal key={key} delay={i * 0.08} y={18} className="space-y-2">
             <Label htmlFor={key} className="text-[10px] tracking-luxe text-muted-foreground">
               {label}
             </Label>
@@ -94,11 +96,14 @@ function Profile() {
               type={type}
               value={form[key]}
               onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-              className="rounded-none"
+              className="rounded-none border-x-0 border-t-0 px-0 focus-visible:ring-0"
             />
-          </div>
+          </Reveal>
         ))}
-        <Button type="submit" className="rounded-none px-8 text-[11px] tracking-luxe">
+        <Button
+          type="submit"
+          className="rounded-none px-8 text-[11px] tracking-luxe transition-transform hover:-translate-y-0.5"
+        >
           Save profile
         </Button>
       </form>
