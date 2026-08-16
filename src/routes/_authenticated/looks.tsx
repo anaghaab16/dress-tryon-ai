@@ -3,6 +3,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { motion } from "motion/react";
+import { PageHeading } from "@/components/PageHeading";
+import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/looks")({
@@ -47,8 +50,7 @@ function Looks() {
 
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-14">
-      <p className="text-[10px] tracking-luxe text-muted-foreground">Your wardrobe</p>
-      <h1 className="mt-3 font-display text-4xl md:text-5xl">My Looks</h1>
+      <PageHeading eyebrow="Your wardrobe" title="My Looks" accentFrom={1} />
 
       {isLoading && <p className="mt-10 text-sm text-muted-foreground">Loading…</p>}
       {!isLoading && !data?.length && (
@@ -58,8 +60,13 @@ function Looks() {
       )}
 
       <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {data?.map((look) => (
-          <article key={look.id} className="group border border-border bg-card shadow-soft">
+        {data?.map((look, i) => (
+          <Reveal key={look.id} delay={(i % 3) * 0.1}>
+            <motion.article
+              whileHover={{ y: -8 }}
+              transition={{ type: "spring", stiffness: 280, damping: 22 }}
+              className="group h-full glass-panel shadow-soft"
+            >
             <img
               src={look.result_image_url ?? look.dress_image_url}
               alt={look.title ?? "Saved try-on"}
@@ -82,7 +89,8 @@ function Looks() {
                 <Trash2 className="mr-2 size-3.5" /> Delete
               </Button>
             </div>
-          </article>
+            </motion.article>
+          </Reveal>
         ))}
       </div>
     </main>
