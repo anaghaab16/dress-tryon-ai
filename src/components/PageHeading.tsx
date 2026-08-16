@@ -13,7 +13,7 @@ export function PageHeading({
 }: {
   eyebrow: string;
   title: string;
-  accentFrom?: number;
+  accentFrom?: number | undefined;
   children?: ReactNode;
 }) {
   return (

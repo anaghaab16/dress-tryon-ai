@@ -214,3 +214,14 @@
 @utility animate-marquee {
   animation: marquee-x 26s linear infinite;
 }
+
+@utility type-slot {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+}
+
+@utility rule-sweep {
+  position: relative;
+}

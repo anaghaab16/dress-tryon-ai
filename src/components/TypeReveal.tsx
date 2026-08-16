@@ -19,7 +19,7 @@ export function TypeReveal({
   stagger?: number;
   as?: "h1" | "h2" | "h3" | "span" | "p";
   /** Index of the first word rendered in the gold accent face. */
-  accentFrom?: number;
+  accentFrom?: number | undefined;
 }) {
   const Tag = motion[as] as typeof motion.span;
   const words = text.split(" ");
