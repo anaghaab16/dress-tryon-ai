@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
+import { motion } from "motion/react";
 import { Menu, Search, ShoppingBag, Sparkles, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -55,19 +56,34 @@ export function SiteHeader() {
         </Sheet>
 
         <Link to="/" className="font-display text-2xl font-semibold tracking-tight">
-          Maison<span className="text-accent">Mirror</span>
+          <span className="type-slot">
+            <motion.span
+              className="inline-block"
+              initial={{ y: "110%" }}
+              animate={{ y: "0%" }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Maison<span className="text-accent">Mirror</span>
+            </motion.span>
+          </span>
         </Link>
 
         <nav className="ml-10 hidden items-center gap-9 text-[11px] tracking-luxe md:flex">
-          {NAV.map((item) => (
-            <Link
+          {NAV.map((item, i) => (
+            <motion.div
               key={item.to}
-              to={item.to}
-              className="text-muted-foreground transition-colors hover:text-foreground"
-              activeProps={{ className: "text-foreground" }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
             >
-              {item.label}
-            </Link>
+              <Link
+                to={item.to}
+                className="story-link text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground" }}
+              >
+                {item.label}
+              </Link>
+            </motion.div>
           ))}
         </nav>
 
