@@ -16,6 +16,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const NAV = [
   { label: "Home", to: "/" },
+  { label: "Shop", to: "/shop" },
   { label: "Try-On Studio", to: "/studio" },
   { label: "My Looks", to: "/looks" },
 ];
