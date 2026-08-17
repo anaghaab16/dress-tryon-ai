@@ -15,9 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/_authenticated/studio")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    dress: typeof search["dress"] === "string" ? (search["dress"] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { dress?: string } =>
+    typeof search["dress"] === "string" ? { dress: search["dress"] as string } : {},
   head: () => ({
     meta: [
       { title: "Try-On Studio — Maison Mirror" },
