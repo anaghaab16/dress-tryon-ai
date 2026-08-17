@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { ArrowRight, ShoppingBag } from "lucide-react";
-import { CATALOG } from "@/lib/catalog";
+import { CATALOG, formatINR } from "@/lib/catalog";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PageHeading } from "@/components/PageHeading";
 import { Button } from "@/components/ui/button";
@@ -79,7 +79,7 @@ function Shop() {
               <p className="mt-4 text-[10px] tracking-luxe text-muted-foreground">{item.brand}</p>
               <h2 className="mt-1 font-display text-xl leading-snug">{item.name}</h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
-              <p className="mt-3 text-sm">${item.price}</p>
+              <p className="mt-3 text-sm">{formatINR(item.price)}</p>
               <div className="mt-4 flex flex-col gap-2">
                 <Button asChild size="sm" className="rounded-none text-[10px] tracking-luxe">
                   <Link to="/studio" search={{ dress: item.id }}>

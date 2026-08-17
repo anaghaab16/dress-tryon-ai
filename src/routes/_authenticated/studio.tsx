@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 import { Loader2, Upload, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 import { createTryOn } from "@/lib/tryon.functions";
-import { findCatalogItem } from "@/lib/catalog";
+import { findCatalogItem, formatINR } from "@/lib/catalog";
 import { fileToCompressedDataUrl, urlToCompressedDataUrl } from "@/lib/images";
 import { PageHeading } from "@/components/PageHeading";
 import { Reveal } from "@/components/Reveal";
@@ -74,7 +74,7 @@ function Studio() {
 
       {picked && (
         <p className="mt-4 text-[10px] tracking-luxe text-muted-foreground">
-          Selected from the shop · {picked.name} — ${picked.price}
+          Selected from the shop · {picked.name} — {formatINR(picked.price)}
         </p>
       )}
 
