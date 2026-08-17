@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -6,7 +6,8 @@ import { motion } from "motion/react";
 import { Loader2, Upload, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 import { createTryOn } from "@/lib/tryon.functions";
-import { fileToCompressedDataUrl } from "@/lib/images";
+import { findCatalogItem } from "@/lib/catalog";
+import { fileToCompressedDataUrl, urlToCompressedDataUrl } from "@/lib/images";
 import { PageHeading } from "@/components/PageHeading";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/_authenticated/studio")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    dress: typeof search["dress"] === "string" ? (search["dress"] as string) : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Try-On Studio — Maison Mirror" },
@@ -30,11 +34,27 @@ type Result = { result_image_url: string | null; advice: string | null };
 function Studio() {
   const run = useServerFn(createTryOn);
   const queryClient = useQueryClient();
+  const { dress: dressId } = Route.useSearch();
+  const picked = findCatalogItem(dressId);
   const [person, setPerson] = useState<string | null>(null);
   const [dress, setDress] = useState<string | null>(null);
   const [occasion, setOccasion] = useState("");
   const [title, setTitle] = useState("");
   const [result, setResult] = useState<Result | null>(null);
+
+  useEffect(() => {
+    if (!picked) return;
+    let cancelled = false;
+    setTitle((current) => current || picked.name);
+    urlToCompressedDataUrl(picked.image)
+      .then((dataUrl) => {
+        if (!cancelled) setDress(dataUrl);
+      })
+      .catch(() => toast.error("That catalogue photo could not be loaded."));
+    return () => {
+      cancelled = true;
+    };
+  }, [picked]);
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -52,6 +72,12 @@ function Studio() {
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-14">
       <PageHeading eyebrow="The fitting room" title="Try-On Studio" accentFrom={1} />
+
+      {picked && (
+        <p className="mt-4 text-[10px] tracking-luxe text-muted-foreground">
+          Selected from the shop · {picked.name} — ${picked.price}
+        </p>
+      )}
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_1.1fr]">
         <Reveal className="space-y-8">
