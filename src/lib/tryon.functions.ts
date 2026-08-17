@@ -42,7 +42,7 @@ export const createTryOn = createServerFn({ method: "POST" })
 
     // 1. Image model: fuse the person photo with the dress photo.
     const visual = await call({
-      model: "google/gemini-3.1-flash-image",
+      model: "google/gemini-3-pro-image",
       modalities: ["image", "text"],
       messages: [
         {
@@ -50,7 +50,16 @@ export const createTryOn = createServerFn({ method: "POST" })
           content: [
             {
               type: "text",
-              text: `Photorealistic virtual try-on. Dress the person from the first photo in the garment from the second photo. Keep the person's face, hair, body proportions and skin tone exactly the same. Match the garment's colour, print, fabric and cut faithfully. Natural lighting and a clean studio background, full-body framing, styled for ${occasion}.`,
+              text: [
+                "Photorealistic virtual try-on. IMAGE 1 is the person. IMAGE 2 is the garment reference.",
+                "Output exactly ONE image of the SAME single person from IMAGE 1, now wearing the garment from IMAGE 2.",
+                "Anatomy rules (critical): exactly one head, one neck, two arms, two hands with five fingers each, two legs, two feet.",
+                "Never duplicate, mirror, merge or add extra limbs, hands, arms, shoulders or people. Do not copy the model, mannequin, hanger or body parts from IMAGE 2 — take ONLY the garment's colour, print, fabric, cut and length from it.",
+                "Keep the person's face, hairstyle, body proportions, pose and skin tone identical to IMAGE 1.",
+                "The garment must follow the person's real body and pose with correct sleeve length and natural fabric drape; arms stay in their original position and are visible through/over the garment correctly.",
+                "Single subject, full-body framing, clean studio background, natural even lighting, sharp realistic hands.",
+                `Styling context: ${occasion}.`,
+              ].join(" "),
             },
             { type: "image_url", image_url: { url: data.personImage } },
             { type: "image_url", image_url: { url: data.dressImage } },
