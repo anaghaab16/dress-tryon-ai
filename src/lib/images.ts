@@ -19,7 +19,7 @@ export async function fileToCompressedDataUrl(file: File, maxSide = 1280): Promi
  * Fetches an image URL (e.g. a bundled catalogue photo) and returns it as a
  * downscaled JPEG data URL so it can be sent to the try-on model.
  */
-export async function urlToCompressedDataUrl(url: string, maxSide = 896): Promise<string> {
+export async function urlToCompressedDataUrl(url: string, maxSide = 1280): Promise<string> {
   const response = await fetch(url);
   const blob = await response.blob();
   const file = new File([blob], "garment.jpg", { type: blob.type || "image/jpeg" });
