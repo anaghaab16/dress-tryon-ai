@@ -53,9 +53,9 @@ export const createTryOn = createServerFn({ method: "POST" })
               text: [
                 "Photorealistic virtual try-on. IMAGE 1 is the person. IMAGE 2 is the garment reference.",
                 "Output exactly ONE image of the SAME single person from IMAGE 1, now wearing the garment from IMAGE 2.",
+                "Identity rule (critical): keep the person's face, hairstyle, body proportions, pose and skin tone IDENTICAL to IMAGE 1. Do not change the face. Preserve the exact facial features, identity, expression, eye shape, nose, lips, jawline, hairline and hair colour. The face in the output must be recognisably the same person as in IMAGE 1.",
                 "Anatomy rules (critical): exactly one head, one neck, two arms, two hands with five fingers each, two legs, two feet.",
                 "Never duplicate, mirror, merge or add extra limbs, hands, arms, shoulders or people. Do not copy the model, mannequin, hanger or body parts from IMAGE 2 — take ONLY the garment's colour, print, fabric, cut and length from it.",
-                "Keep the person's face, hairstyle, body proportions, pose and skin tone identical to IMAGE 1.",
                 "The garment must follow the person's real body and pose with correct sleeve length and natural fabric drape; arms stay in their original position and are visible through/over the garment correctly.",
                 "Single subject, full-body framing, sharp realistic hands, correct perspective and scale.",
                 "Photography quality: shot on a full-frame camera with an 85mm lens at f/2.8, high-end fashion editorial look, crisp focus on the face and garment, soft natural falloff in the background.",
