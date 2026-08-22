@@ -94,9 +94,20 @@ function Shop() {
                   variant="outline"
                   size="sm"
                   className="rounded-none text-[10px] tracking-luxe"
+                  disabled={pendingId === item.id}
+                  onClick={() => buy(item.id)}
                 >
-                  <ShoppingBag className="mr-2 size-3.5" /> Add to bag
+                  {pendingId === item.id ? (
+                    <>
+                      <Loader2 className="mr-2 size-3.5 animate-spin" /> Opening checkout…
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="mr-2 size-3.5" /> Buy {formatINR(item.price)}
+                    </>
+                  )}
                 </Button>
+
               </div>
             </motion.article>
           ))}
