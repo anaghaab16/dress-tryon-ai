@@ -35,6 +35,8 @@ const FILTERS = ["All", "Evening", "Day", "Tailoring"] as const;
 function Shop() {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
   const items = CATALOG.filter((item) => filter === "All" || item.category === filter);
+  const { buy, pendingId } = useCheckout();
+
 
   return (
     <div className="min-h-screen bg-background">
