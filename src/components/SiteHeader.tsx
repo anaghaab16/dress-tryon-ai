@@ -112,6 +112,10 @@ export function SiteHeader() {
                 <DropdownMenuItem onSelect={() => navigate({ to: "/looks" })}>
                   My Looks
                 </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => navigate({ to: "/orders" })}>
+                  Orders
+                </DropdownMenuItem>
+
                 <DropdownMenuItem onSelect={() => navigate({ to: "/profile" })}>
                   Profile
                 </DropdownMenuItem>
