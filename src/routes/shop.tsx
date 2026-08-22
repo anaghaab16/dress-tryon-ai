@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { useState } from "react";
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import { ArrowRight, Loader2, ShoppingBag } from "lucide-react";
 import { CATALOG, formatINR } from "@/lib/catalog";
+import { useCheckout } from "@/hooks/useCheckout";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PageHeading } from "@/components/PageHeading";
 import { Button } from "@/components/ui/button";
+
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
