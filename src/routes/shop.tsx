@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { useState } from "react";
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import { ArrowRight, Loader2, ShoppingBag } from "lucide-react";
 import { CATALOG, formatINR } from "@/lib/catalog";
+import { useCheckout } from "@/hooks/useCheckout";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PageHeading } from "@/components/PageHeading";
 import { Button } from "@/components/ui/button";
+
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -33,6 +35,8 @@ const FILTERS = ["All", "Evening", "Day", "Tailoring"] as const;
 function Shop() {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
   const items = CATALOG.filter((item) => filter === "All" || item.category === filter);
+  const { buy, pendingId } = useCheckout();
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -90,9 +94,20 @@ function Shop() {
                   variant="outline"
                   size="sm"
                   className="rounded-none text-[10px] tracking-luxe"
+                  disabled={pendingId === item.id}
+                  onClick={() => buy(item.id)}
                 >
-                  <ShoppingBag className="mr-2 size-3.5" /> Add to bag
+                  {pendingId === item.id ? (
+                    <>
+                      <Loader2 className="mr-2 size-3.5 animate-spin" /> Opening checkout…
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="mr-2 size-3.5" /> Buy {formatINR(item.price)}
+                    </>
+                  )}
                 </Button>
+
               </div>
             </motion.article>
           ))}
