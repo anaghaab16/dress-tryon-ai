@@ -30,12 +30,13 @@ export const Route = createFileRoute("/shop")({
   component: Shop,
 });
 
-const FILTERS = ["All", "Evening", "Day", "Tailoring"] as const;
+const FILTERS = ["All", ...CATEGORIES] as const;
 
 function Shop() {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
   const items = CATALOG.filter((item) => filter === "All" || item.category === filter);
   const { buy, pendingId } = useCheckout();
+
 
 
   return (
