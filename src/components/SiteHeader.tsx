@@ -19,6 +19,7 @@ const NAV = [
   { label: "Shop", to: "/shop" },
   { label: "Try-On Studio", to: "/studio" },
   { label: "My Looks", to: "/looks" },
+  { label: "Orders", to: "/orders" },
 ];
 
 export function SiteHeader() {
