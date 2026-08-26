@@ -1,13 +1,5 @@
-# Style Try-On
-
-i need to build a Ai website where i add a photo of a picture of a dress and i need to know how i look in the that dress 
-
-give me the technologies you are using . it should be done in python only 
-
-and explain the code line by line 
-
-Add all the details like log in , sign up , authentication , authorization , good database , api and add a good UI to the website 
- for UI use this Fashion E-Commerce Website Header by Md Shariful Islam Khan on Dribbble
+This is a website used to know whether the dress will suit us or not 
+it will also give a honest opinion on the dress 
 
 This project was built with [Lovable](https://lovable.dev).
 
